@@ -1,0 +1,6 @@
+For portainer under OpenMediaVault 5 on Raspberry pi 4
+
+App templates
+Use external templates:
+
+https://raw.githubusercontent.com/SelfhostedPro/selfhosted_templates/OMV5/Template/template.json
