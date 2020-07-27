@@ -4,3 +4,24 @@ App templates
 Use external templates:
 
 https://raw.githubusercontent.com/SelfhostedPro/selfhosted_templates/OMV5/Template/template.json
+
+
+WatchTower va "monitorer" les mises à jour des containers docker, 
+même capable de faire les mises à jour de Portainer et de le redemarrer de façon transparente
+
+
+dans l'exemple crontab
+
+
+docker run \
+    --name watchtower \
+    --volume /var/run/docker.sock:/var/run/docker.sock \
+    --detach \
+    v2tec/watchtower \
+    --schedule "0 0 4 * * *" \
+    --cleanup
+
+le parametre --cleanup permet d'effacer les anciennes versions, pour ne garder que la dernière version récupérée par watchtower
+On peut toujours utiliser dans une crontab la commande pour effacer les images inutilisées par Docker
+
+docker image prune -f
