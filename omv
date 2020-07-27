@@ -58,11 +58,14 @@ services:
 Pensez à modifier les mots de passe pour MySQL ainsi que le chemin du volume
 
 sudo docker-compose up -d 
+
 prévoir 5 bonnes minutes le temps que le raspberry pi récupère tout
 
-La première connexion se fera sur le port 82 (modifiable dans le docker-compose)
+La première connexion en hhtp se fera sur le port 82 (modifiable dans le docker-compose)
 
 Avec le mot de passe par défaut:
 
 Username: admin@example.com
 Password: changeme
+
+
