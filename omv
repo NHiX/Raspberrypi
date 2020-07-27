@@ -1,2 +1,55 @@
 OpenMediaVault sera sur le port 90
 Afin de faciliter l'accès à NginxProxyManager via les ports 80 81 et 443
+
+En ssh, depuis le home de l'utilisateur pi
+mkdir nginx && cd nginx
+vi config.json
+
+{
+  "database": {
+    "engine": "mysql",
+    "host": "db",
+    "name": "DBNAME",
+    "user": "DBUSERNAME",
+    "password": "DBPASSWORD",
+    "port": 3306
+  }
+}
+
+Sauvegarde :x
+
+Toujours dans le même répertoire, création d'un fichier docker-compose.yml
+
+vi docker-compose.yml
+
+---
+version: "3"
+services:
+  app:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    volumes:
+      - ./config.json:/app/config/production.json
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+    ports:
+      - 80:80
+      - 443:440
+      - 82:81
+    restart: unless-stopped
+  db:
+    image: yobasystems/alpine-mariadb:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ROOTPASSWORD
+      MYSQL_DATABASE: DBNAME
+      MYSQL_USER: DBUSERNAME
+      MYSQL_PASSWORD: DBPASSWORD
+    volumes:    
+      - /srv/dev-disk-by-label-Files/Config/NGINXDB:/var/lib/mysql
+    expose:
+      - "3306"
+
+Pensez à modifier les mots de passe pour MySQL ainsi que le chemin du volume
